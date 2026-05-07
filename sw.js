@@ -1,21 +1,20 @@
-const CACHE_NAME = 'app-magico-v1';
+const CACHE_NAME = 'app-magico-v2';
 const urlsToCache = [
-  './',
-  './index.html',
-  './roleta.html',
-  './tickets.html',
-  './frases.html',
-  './admin.html',
-  './style.css',
-  './script.js',
-  './admin.js',
-  './manifest.json'
+  '/',
+  '/index.html',
+  '/roleta.html',
+  '/tickets.html',
+  '/frases.html',
+  '/style.css',
+  '/script.js',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -30,12 +29,12 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });

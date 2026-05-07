@@ -324,6 +324,44 @@ if (window.location.pathname.includes('frases.html')) {
 // Inicialização
 initData();
 
+// ============ SERVICE WORKER (PWA) ============
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker registrado com sucesso!');
+                console.log('Escopo:', registration.scope);
+            })
+            .catch(error => {
+                console.log('❌ Falha ao registrar Service Worker:', error);
+            });
+    });
+}
+
+// Verificar se pode instalar
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('✅ App pode ser instalado!');
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Opcional: mostrar um botão "Instalar" no app
+    const installBtn = document.createElement('button');
+    installBtn.textContent = '📱 Instalar App';
+    installBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#6C63FF;color:white;border:none;padding:12px 20px;border-radius:50px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+    installBtn.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuário aceitou instalar');
+            }
+            deferredPrompt = null;
+            installBtn.remove();
+        });
+    };
+    document.body.appendChild(installBtn);
+}); 
+
 // Navegação da tela inicial
 if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
     document.querySelectorAll('.home-icon').forEach(icon => {
