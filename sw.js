@@ -1,15 +1,15 @@
 const CACHE_NAME = 'app-magico-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/roleta.html',
-  '/tickets.html',
-  '/frases.html',
-  '/admin.html',
-  '/style.css',
-  '/script.js',
-  '/admin.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './roleta.html',
+  './tickets.html',
+  './frases.html',
+  './admin.html',
+  './style.css',
+  './script.js',
+  './admin.js',
+  './manifest.json'
 ];
 
 self.addEventListener('install', event => {
