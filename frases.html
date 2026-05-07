@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frases</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">← Voltar</button>
+        
+        <h2>📦 Caixinha de Frases 📦</h2>
+        
+        <div class="gift-box" id="giftBox">
+            <div class="gift-lid">🎁</div>
+            <div class="gift-body">📦</div>
+        </div>
+        
+        <button id="abrirBtn" class="action-btn">Abrir Surpresa</button>
+        
+        <div id="fraseSorteada" class="frase-sorteada"></div>
+        
+        <div class="frase-actions" style="display: none;" id="fraseActions">
+            <button id="salvarFraseBtn" class="secondary-btn">💾 Salvar Frase</button>
+            <button id="verSalvasBtn" class="secondary-btn">📖 Ver Frases Salvas</button>
+        </div>
+    </div>
+    
+    <div id="frasesSalvasModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>📚 Frases Salvas</h3>
+            <div id="frasesSalvasList"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

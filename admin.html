@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">← Voltar</button>
+        
+        <h2>🔧 Painel Administrativo 🔧</h2>
+        
+        <!-- Login Simples -->
+        <div id="loginArea" class="admin-login">
+            <input type="password" id="adminPass" placeholder="Senha admin">
+            <button onclick="loginAdmin()">Entrar</button>
+        </div>
+        
+        <!-- Conteúdo Admin (aparece após login) -->
+        <div id="adminContent" style="display: none;">
+            <div class="admin-section">
+                <h3>🎫 Gerenciar Tickets</h3>
+                
+                <div class="form-group">
+                    <input type="text" id="novoTicketTitulo" placeholder="Título (ex: Vale Abraço)">
+                    <textarea id="novoTicketDesc" placeholder="Descrição (ex: Um abração de urso...)"></textarea>
+                    <button onclick="adicionarTicket()">➕ Adicionar Ticket</button>
+                </div>
+                
+                <h4>Tickets Existentes:</h4>
+                <div id="ticketsAdminList"></div>
+                
+                <h4>📊 Estatísticas de Resgates:</h4>
+                <div id="estatisticasTickets"></div>
+            </div>
+            
+            <div class="admin-section">
+                <h3>📦 Gerenciar Frases</h3>
+                
+                <div class="form-group">
+                    <textarea id="novaFrase" placeholder="Digite uma nova frase..."></textarea>
+                    <button onclick="adicionarFrase()">➕ Adicionar Frase</button>
+                </div>
+                
+                <h4>Frases Existentes:</h4>
+                <div id="frasesAdminList"></div>
+            </div>
+            
+            <div class="admin-section">
+                <h3>🎰 Gerenciar Roleta</h3>
+                
+                <div class="form-group">
+                    <input type="text" id="novaOpcaoRoleta" placeholder="Nova opção para roleta">
+                    <button onclick="adicionarOpcaoRoleta()">➕ Adicionar Opção</button>
+                </div>
+                
+                <h4>Opções da Roleta:</h4>
+                <div id="roletaOpcoesList"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
