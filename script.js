@@ -429,8 +429,7 @@ if (currentPath.includes('caracoroa.html')) {
                 if (resultadoDiv) {
                     resultadoDiv.innerHTML = `
                         <div style="font-size: 3em;">🪙</div>
-                        <div><strong>CARAAAAAA! 🎉</strong></div>
-                        <div>Deu cara!</div>
+                        <div><strong>CARAAAAAA!</strong></div>
                     `;
                     resultadoDiv.className = 'resultado-moeda cara';
                 }
@@ -439,8 +438,7 @@ if (currentPath.includes('caracoroa.html')) {
                 if (resultadoDiv) {
                     resultadoDiv.innerHTML = `
                         <div style="font-size: 3em;">💰</div>
-                        <div><strong>COROAAAAA! 🎉</strong></div>
-                        <div>Deu coroa!</div>
+                        <div><strong>COROAAAAA!</strong></div>
                     `;
                     resultadoDiv.className = 'resultado-moeda coroa';
                 }
@@ -537,29 +535,45 @@ if (currentPath.includes('caracoroa.html')) {
 }
 
 // ============ NAVEGAÇÃO DA TELA INICIAL ============
-// Verifica se está na página inicial
-const isHomePage = window.location.pathname.includes('index.html') ||
-    window.location.pathname === '/' ||
-    window.location.pathname === '' ||
-    window.location.pathname === '/index.html';
+const isHomePage = window.location.pathname.includes('index.html') || 
+                   window.location.pathname === '/' || 
+                   window.location.pathname === '' ||
+                   window.location.pathname === '/index.html';
 
 if (isHomePage) {
     console.log('🏠 Tela inicial detectada');
-
-    // Aguardar o DOM carregar completamente
-    document.addEventListener('DOMContentLoaded', function () {
-        const icons = document.querySelectorAll('.home-icon');
-        console.log('Ícones encontrados:', icons.length);
-
-        icons.forEach(icon => {
-            icon.addEventListener('click', function (e) {
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Navegação dos cards/feeds
+        const feedItems = document.querySelectorAll('.feed-item');
+        const verticalCardBtn = document.querySelector('.vertical-card-btn');
+        
+        feedItems.forEach(item => {
+            item.addEventListener('click', function(e) {
                 const page = this.dataset.page;
-                console.log('Clicou no ícone:', page);
-
+                console.log('Clicou no feed:', page);
                 if (page) {
-                    // Navegar para a página
                     window.location.href = page + '.html';
                 }
+            });
+        });
+        
+        if (verticalCardBtn) {
+            verticalCardBtn.addEventListener('click', function(e) {
+                const page = this.dataset.page;
+                console.log('Clicou no botão:', page);
+                if (page) {
+                    window.location.href = page + '.html';
+                }
+            });
+        }
+        
+        // Menu flutuante
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
             });
         });
     });
