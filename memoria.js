@@ -1,9 +1,9 @@
 // ============ JOGO DA MEMÓRIA ============
 if (window.location.pathname.includes('memoria.html')) {
-    console.log('Iniciando Jogo da Memória...');
+    console.log('🍓 Iniciando Jogo da Memória...');
     
     // Configuração do jogo
-    const EMOJIS = ['🍉', '🍓', '🍎', '🍅', '🍒', '🥝'];
+    const EMOJIS = ['🍍', '🍓', '🍇', '🍌', '🍊', '🍋‍🟩'];
     const TOTAL_PAIRS = EMOJIS.length;
     const TOTAL_CARDS = TOTAL_PAIRS * 2;
     const RODADAS_PARA_TICKET = 3;
@@ -12,7 +12,6 @@ if (window.location.pathname.includes('memoria.html')) {
     const TICKET_ESPECIAL_KEY = 'app_ticket_morde_morango';
     
     // Estado do jogo
-    let cartas = [];
     let cartasEmbaralhadas = [];
     let cartasViradas = [];
     let cartasAcertadas = [];
@@ -20,6 +19,7 @@ if (window.location.pathname.includes('memoria.html')) {
     let tentativas = 0;
     let rodadaAtual = 1;
     let aguardandoReset = false;
+    let jogoFinalizado = false;
     
     // Elementos DOM
     const tabuleiro = document.getElementById('tabuleiro');
@@ -28,8 +28,8 @@ if (window.location.pathname.includes('memoria.html')) {
     const tentativasSpan = document.getElementById('tentativas');
     const gameMessage = document.getElementById('gameMessage');
     const ticketModal = document.getElementById('ticketModal');
-    const closeModal = document.querySelector('.close');
     const resgatarBtn = document.getElementById('resgatarTicketBtn');
+    const toast = document.getElementById('toast');
     
     // Verificar se já ganhou o ticket especial
     function jaGanhouTicket() {
@@ -40,7 +40,7 @@ if (window.location.pathname.includes('memoria.html')) {
         localStorage.setItem(TICKET_ESPECIAL_KEY, 'true');
     }
     
-    // Embaralhar cartas (Fisher-Yates)
+    // Embaralhar cartas
     function embaralhar(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -51,24 +51,22 @@ if (window.location.pathname.includes('memoria.html')) {
     
     // Inicializar ou reiniciar rodada
     function iniciarRodada() {
-        // Criar pares de cartas
         const pares = [];
         EMOJIS.forEach((emoji, index) => {
-            pares.push({ id: index, emoji: emoji, pairId: index });
-            pares.push({ id: index, emoji: emoji, pairId: index });
+            pares.push({ emoji: emoji, pairId: index });
+            pares.push({ emoji: emoji, pairId: index });
         });
         
-        // Embaralhar
         cartasEmbaralhadas = embaralhar([...pares]);
         cartasViradas = [];
         cartasAcertadas = [];
         bloqueado = false;
         aguardandoReset = false;
+        jogoFinalizado = false;
         
-        // Atualizar UI
         atualizarStats();
         renderizarTabuleiro();
-        gameMessage.textContent = 'Encontre os pares!';
+        gameMessage.textContent = 'Encontre os pares de frutinhas!';
     }
     
     function atualizarStats() {
@@ -92,7 +90,7 @@ if (window.location.pathname.includes('memoria.html')) {
             
             cartaDiv.innerHTML = `<div class="carta-conteudo">${isVirada || isAcertada ? carta.emoji : '?'}</div>`;
             
-            if (!isAcertada && !bloqueado && !aguardandoReset) {
+            if (!isAcertada && !bloqueado && !aguardandoReset && !jogoFinalizado) {
                 cartaDiv.onclick = () => virarCarta(index);
             }
             
@@ -104,12 +102,11 @@ if (window.location.pathname.includes('memoria.html')) {
         if (bloqueado) return;
         if (cartasViradas.includes(index)) return;
         if (cartasAcertadas.includes(index)) return;
+        if (jogoFinalizado) return;
         
-        // Adicionar à lista de viradas
         cartasViradas.push(index);
         renderizarTabuleiro();
         
-        // Verificar se temos 2 cartas viradas
         if (cartasViradas.length === 2) {
             bloqueado = true;
             tentativas++;
@@ -124,58 +121,57 @@ if (window.location.pathname.includes('memoria.html')) {
         const carta2 = cartasEmbaralhadas[idx2];
         
         if (carta1.pairId === carta2.pairId) {
-            // Acertou!
             cartasAcertadas.push(idx1, idx2);
             cartasViradas = [];
             bloqueado = false;
             renderizarTabuleiro();
             
-            // Verificar se completou a rodada
             if (cartasAcertadas.length === TOTAL_CARDS) {
                 completarRodada();
             } else {
                 atualizarStats();
-                gameMessage.textContent = 'AEEE, acertou!!!';
+                gameMessage.textContent = 'ACERTOOOOOOOOOOOU';
                 setTimeout(() => {
-                    if (!aguardandoReset) {
+                    if (!aguardandoReset && !jogoFinalizado) {
                         gameMessage.textContent = 'Encontre os pares de frutinhas!';
                     }
                 }, 1000);
             }
         } else {
-            // Errou! virar de volta depois de 1 segundo
             gameMessage.textContent = 'Eita, quase';
             setTimeout(() => {
                 cartasViradas = [];
                 bloqueado = false;
                 renderizarTabuleiro();
-                gameMessage.textContent = 'Encontre os pares!! Você consegue <3';
+                if (!jogoFinalizado) {
+                    gameMessage.textContent = 'Encontre os pares de frutinhas!';
+                }
             }, 800);
         }
     }
     
     function completarRodada() {
-        gameMessage.textContent = `rodada ${rodadaAtual} completa! 🍓`;
-        
         if (rodadaAtual < RODADAS_PARA_TICKET) {
             // Próxima rodada
+            gameMessage.textContent = `rodada ${rodadaAtual} completa! `;
             rodadaAtual++;
             tentativas = 0;
             aguardandoReset = true;
             
             setTimeout(() => {
                 iniciarRodada();
-                gameMessage.textContent = `rodada ${rodadaAtual} de ${RODADAS_PARA_TICKET}! mais difícil? nem tanto!`;
+                gameMessage.textContent = `🍓 rodada ${rodadaAtual} de ${RODADAS_PARA_TICKET}!`;
             }, 1500);
         } else {
             // Completou todas as rodadas!
-            gameMessage.textContent = 'SABIA QUE CONSEGUIRIA! ❤️';
+            jogoFinalizado = true;
+            gameMessage.textContent = 'VOCÊ VENCEEEEUUUU';
             
             setTimeout(() => {
                 if (!jaGanhouTicket()) {
                     mostrarTicketEspecial();
                 } else {
-                    gameMessage.textContent = 'você já ganhou seu ticket especial, espertinho! jogue de novo por diversão!';
+                    gameMessage.textContent = 'você já ganhou seu ticket especial, espertinho. Jogue de novo por diversão!';
                     setTimeout(() => {
                         reiniciarJogoCompleto();
                     }, 2000);
@@ -189,28 +185,34 @@ if (window.location.pathname.includes('memoria.html')) {
     }
     
     function resgatarTicket() {
+        // Verificar de novo se já ganhou (por segurança)
+        if (jaGanhouTicket()) {
+            ticketModal.style.display = 'none';
+            reiniciarJogoCompleto();
+            return;
+        }
+        
+        // Salvar que ganhou o ticket
         salvarTicketGanho();
         
-        // Salvar ticket no sistema de tickets
+        // Adicionar ticket especial ao sistema de tickets
         const tickets = JSON.parse(localStorage.getItem('app_tickets'));
-        const resgatados = JSON.parse(localStorage.getItem('app_tickets_resgatados'));
-        
         const novoTicket = {
             id: Date.now(),
             titulo: "Vale Morango Selvagem 🍓",
-            descricao: "Um beijo especial, um chamego, um negócio caliente"
+            descricao: "Vale um carinho sapeca 🐯 Uaaarr"
         };
         
         tickets.push(novoTicket);
         localStorage.setItem('app_tickets', JSON.stringify(tickets));
         
+        // Fechar modal
+        ticketModal.style.display = 'none';
+        
         // Mostrar toast
         toast.textContent = 'Ticket Especial resgatado! Vá em "seus tickets" para ver!';
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 4000);
-        
-        // Fechar modal
-        ticketModal.style.display = 'none';
         
         // Reiniciar jogo
         reiniciarJogoCompleto();
@@ -220,11 +222,13 @@ if (window.location.pathname.includes('memoria.html')) {
         rodadaAtual = 1;
         tentativas = 0;
         aguardandoReset = false;
+        jogoFinalizado = false;
         iniciarRodada();
-        gameMessage.textContent = 'nova partidaaaaa! divirta-se! ❤️';
+        gameMessage.textContent = 'Nova partida! divirta-se! ❤️';
     }
     
     // Fechar modal
+    const closeModal = document.querySelector('.close');
     if (closeModal) {
         closeModal.onclick = () => {
             ticketModal.style.display = 'none';
@@ -245,7 +249,4 @@ if (window.location.pathname.includes('memoria.html')) {
     
     // Iniciar jogo
     iniciarRodada();
-    
-    // Toast element
-    const toast = document.getElementById('toast');
 }
