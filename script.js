@@ -363,31 +363,33 @@ if (window.location.pathname.includes('frases.html')) {
 // Inicialização
 initData();
 
-// ============ SERVICE WORKER (PWA) ============
+// ============ PWA - INSTALAÇÃO FORÇADA ============
+let deferredPrompt;
+let installButton = null;
+
+// Registrar Service Worker
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker registrado com sucesso!');
-                console.log('Escopo:', registration.scope);
-            })
-            .catch(error => {
-                console.log('❌ Falha ao registrar Service Worker:', error);
-            });
-    });
+    navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('✅ Service Worker registrado'))
+        .catch(err => console.log('❌ Erro:', err));
 }
 
-// Verificar se pode instalar
-let deferredPrompt;
+// Tentar capturar evento de instalação nativo
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('✅ App pode ser instalado!');
+    console.log('✅ Evento beforeinstallprompt capturado!');
     e.preventDefault();
     deferredPrompt = e;
+    mostrarBotaoInstalar();
+});
 
-    // Botão "Instalar" no app com as cores do Moranguete
-    const installBtn = document.createElement('button');
-    installBtn.textContent = '🍓 instalar app';
-    installBtn.style.cssText = `
+// Função para mostrar o botão
+function mostrarBotaoInstalar() {
+    if (installButton) return; // já existe
+    
+    installButton = document.createElement('button');
+    installButton.textContent = '🍓 instalar app';
+    installButton.id = 'pwa-install-btn';
+    installButton.style.cssText = `
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -395,10 +397,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
         color: #FFEDAB;
         border: none;
         border-radius: 60px;
-        padding: 12px 20px;
+        padding: 12px 24px;
         font-family: 'Courier New', monospace;
         font-weight: bold;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         cursor: pointer;
         z-index: 9999;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -406,18 +408,51 @@ window.addEventListener('beforeinstallprompt', (e) => {
         letter-spacing: 1px;
     `;
     
-    installBtn.onclick = () => {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuário aceitou instalar');
+    installButton.onclick = async () => {
+        if (deferredPrompt) {
+            // Instalação nativa
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('App instalado!');
+                installButton.remove();
+                installButton = null;
             }
             deferredPrompt = null;
-            installBtn.remove();
-        });
+        } else {
+            // Fallback: mostrar instruções
+            alert('🍓 Para instalar o app:\n\n1. Toque nos 3 pontinhos ⋮\n2. Selecione "Instalar app" ou "Adicionar à tela inicial"\n3. Confirme a instalação');
+        }
     };
-    document.body.appendChild(installBtn);
+    
+    document.body.appendChild(installButton);
+}
+
+// Se o evento beforeinstallprompt não disparar em 3 segundos, mostra botão alternativo
+setTimeout(() => {
+    if (!installButton && !deferredPrompt) {
+        console.log('⚠️ Evento beforeinstallprompt não detectado, mostrando botão alternativo');
+        mostrarBotaoInstalar();
+    }
+}, 3000);
+
+// Se já estiver instalado, remove botão
+window.addEventListener('appinstalled', () => {
+    if (installButton) {
+        installButton.remove();
+        installButton = null;
+    }
+    deferredPrompt = null;
 });
+
+// Verificar se já está instalado (via localStorage)
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('App já está instalado (modo standalone)');
+    if (installButton) {
+        installButton.remove();
+        installButton = null;
+    }
+}
 
 // ============ CARA OU COROA ============
 // Primeiro, define o path baseado na URL atual
