@@ -2,22 +2,22 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Tickets</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#75070C">
 </head>
 <body>
     <div class="container">
-        <button class="back-btn" onclick="goBack()">← Voltar</button>
+        <button class="back-btn" onclick="goBack()">← voltar</button>
         
-        <h2>🎫 Meus Tickets 🎫</h2>
+        <h2>seus tickets</h2>
         
-        <div id="ticketsList" class="tickets-list">
-            <!-- Tickets serão inseridos aqui -->
-        </div>
+        <div id="ticketsList" class="tickets-list"></div>
     </div>
     
-    <div id="toast" class="toast">Ticket resgatado com sucesso!!</div>
+    <div id="toast" class="toast"></div>
     
     <script src="./script.js"></script>
 </body>

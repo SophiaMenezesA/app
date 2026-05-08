@@ -1,4 +1,4 @@
-/* ============ ESTILO RETRÔ - SOS MORANGO ============ */
+/* ============ ESTILO RETRÔ - MORANGUETE ============ */
 * {
     margin: 0;
     padding: 0;
@@ -18,76 +18,37 @@ body {
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
-    background: #FFEDAB;
-    box-shadow: 0 0 0 4px #4F6815, 0 0 0 8px #75070C;
-    position: relative;
-}
-
-/* Padrão retrô de fundo */
-.container::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    background: repeating-linear-gradient(
-        45deg,
-        rgba(79, 104, 21, 0.05) 0px,
-        rgba(79, 104, 21, 0.05) 2px,
-        transparent 2px,
-        transparent 8px
-    );
-    pointer-events: none;
+    background: #F0E6DA;
 }
 
 /* Tela Inicial */
 .home-container {
-    text-align: center;
-    background: #FFEDAB;
+    background: #F0E6DA;
     color: #2c1810;
 }
 
 .home-container h1 {
-    margin-bottom: 20px;
     font-size: 2.5em;
     font-family: 'Courier New', monospace;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    font-weight: 800;
     color: #75070C;
-    text-shadow: 3px 3px 0 #FFEDAB, 5px 5px 0 #4F6815;
-    background: #F0E6DA;
-    display: inline-block;
-    padding: 15px 30px;
-    border-radius: 0;
-    border: 3px solid #4F6815;
-    box-shadow: 8px 8px 0 #75070C;
-}
-
-.subtitle {
-    font-size: 0.9em;
-    color: #4F6815;
-    margin-top: -10px;
+    text-align: left;
     margin-bottom: 30px;
-    font-style: italic;
+    letter-spacing: 2px;
 }
 
-/* Grid de ícones */
+/* Grid de ícones - alinhado à esquerda */
 .home-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    margin-top: 40px;
-    padding: 10px;
-}
-
-@media (min-width: 480px) {
-    .home-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .home-icon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -101,76 +62,59 @@ body {
 }
 
 .icon-circle {
-    width: 100px;
-    height: 100px;
-    background: #F0E6DA;
+    width: 80px;
+    height: 80px;
+    background: transparent;
     border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3em;
-    margin: 0 auto 10px;
-    border: 3px solid #4F6815;
-    box-shadow: 6px 6px 0 #75070C;
     transition: all 0.2s;
 }
 
-.home-icon:hover .icon-circle {
-    box-shadow: 3px 3px 0 #75070C;
-    transform: translate(3px, 3px);
-}
-
 .icon-circle img {
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
 }
 
 .home-icon span {
     font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 0.9em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    background: #F0E6DA;
-    padding: 4px 8px;
-    border: 2px solid #4F6815;
+    font-weight: 700;
+    font-size: 1.2em;
     color: #75070C;
+    letter-spacing: 1px;
 }
 
 /* Botão voltar */
 .back-btn {
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #75070C;
+    border: none;
     font-size: 1em;
     font-family: 'Courier New', monospace;
     font-weight: bold;
     cursor: pointer;
     padding: 8px 16px;
     margin-bottom: 20px;
-    color: #75070C;
+    color: #FFEDAB;
     text-transform: uppercase;
-    box-shadow: 4px 4px 0 #75070C;
     transition: all 0.1s;
 }
 
 .back-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #75070C;
 }
 
-/* Títulos */
+/* Títulos alinhados à esquerda, sem emojis */
 h2 {
     font-family: 'Courier New', monospace;
-    font-size: 1.8em;
-    text-align: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: left;
     color: #75070C;
-    text-transform: uppercase;
-    letter-spacing: 2px;
     margin: 20px 0;
-    border-bottom: 4px dotted #4F6815;
-    display: inline-block;
-    width: auto;
+    letter-spacing: 1px;
 }
 
 /* Roleta */
@@ -182,8 +126,8 @@ h2 {
 
 #roletaCanvas {
     border-radius: 0;
-    box-shadow: 8px 8px 0 #4F6815;
-    border: 3px solid #75070C;
+    box-shadow: none;
+    border: 3px solid #4F6815;
 }
 
 .ponteiro {
@@ -193,9 +137,7 @@ h2 {
     transform: translateX(-50%);
     font-size: 2em;
     color: #75070C;
-    text-shadow: none;
     z-index: 10;
-    filter: drop-shadow(2px 4px 0 #4F6815);
 }
 
 /* Botões de ação */
@@ -204,7 +146,7 @@ h2 {
     color: #FFEDAB;
     border: none;
     padding: 12px 24px;
-    font-size: 1.2em;
+    font-size: 1em;
     font-family: 'Courier New', monospace;
     font-weight: bold;
     cursor: pointer;
@@ -213,13 +155,11 @@ h2 {
     width: 200px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    box-shadow: 6px 6px 0 #4F6815;
     transition: all 0.1s;
 }
 
 .action-btn:active {
-    transform: translate(3px, 3px);
-    box-shadow: 3px 3px 0 #4F6815;
+    transform: translate(2px, 2px);
 }
 
 .secondary-btn {
@@ -232,13 +172,11 @@ h2 {
     cursor: pointer;
     margin: 5px;
     text-transform: uppercase;
-    box-shadow: 4px 4px 0 #75070C;
     transition: all 0.1s;
 }
 
 .secondary-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #75070C;
 }
 
 .resultado {
@@ -246,8 +184,8 @@ h2 {
     font-size: 1.2em;
     margin-top: 20px;
     padding: 15px;
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
     font-family: monospace;
     font-weight: bold;
 }
@@ -260,20 +198,18 @@ h2 {
 }
 
 .ticket-card {
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.2s;
     cursor: pointer;
-    box-shadow: 5px 5px 0 #75070C;
 }
 
 .ticket-card:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #75070C;
 }
 
 .ticket-card.resgatado {
@@ -285,7 +221,7 @@ h2 {
     margin-bottom: 5px;
     color: #75070C;
     font-family: 'Courier New', monospace;
-    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .ticket-info p {
@@ -301,18 +237,15 @@ h2 {
     font-family: 'Courier New', monospace;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 3px 3px 0 #4F6815;
     transition: all 0.1s;
 }
 
 .resgatar-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 #4F6815;
 }
 
 .resgatar-btn:disabled {
     background: #aaa;
-    box-shadow: none;
     cursor: not-allowed;
 }
 
@@ -330,22 +263,19 @@ h2 {
     white-space: nowrap;
     font-family: monospace;
     font-weight: bold;
-    border: 2px solid #FFEDAB;
-    box-shadow: 4px 4px 0 #75070C;
 }
 
 .toast.show {
     bottom: 30px;
 }
 
-/* Caixinha de presente */
+/* Caixinha de presente - sem caixa de baixo */
 .gift-box {
     text-align: center;
-    font-size: 6em;
+    font-size: 8em;
     cursor: pointer;
-    margin: 40px 0;
+    margin: 60px 0;
     transition: all 0.2s;
-    filter: drop-shadow(6px 8px 0 #4F6815);
 }
 
 .gift-box.shake {
@@ -362,12 +292,17 @@ h2 {
     text-align: center;
     font-size: 1.2em;
     padding: 20px;
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
     margin: 20px 0;
     font-family: monospace;
     font-weight: bold;
     color: #75070C;
+}
+
+.frase-actions {
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* Modal */
@@ -388,8 +323,7 @@ h2 {
     padding: 20px;
     width: 80%;
     max-width: 500px;
-    border: 4px solid #4F6815;
-    box-shadow: 10px 10px 0 #75070C;
+    border: 3px solid #4F6815;
     font-family: monospace;
 }
 
@@ -401,16 +335,16 @@ h2 {
     color: #75070C;
 }
 
-/* Cara ou Coroa */
+/* Cara ou Coroa - moeda maior, sem caixa */
 .moeda-container {
     display: flex;
     justify-content: center;
-    margin: 40px 0;
+    margin: 50px 0;
 }
 
 .moeda {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     position: relative;
     cursor: pointer;
 }
@@ -429,14 +363,13 @@ h2 {
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 0;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4em;
-    background: #F0E6DA;
-    border: 4px solid #4F6815;
-    box-shadow: 8px 8px 0 #75070C;
+    font-size: 5em;
+    background: #FFEDAB;
+    border: 3px solid #4F6815;
     backface-visibility: hidden;
 }
 
@@ -452,26 +385,25 @@ h2 {
     font-size: 1.3em;
     padding: 15px;
     margin: 20px 0;
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
     font-weight: bold;
 }
 
-.resultado-moeda.cara { background: #F0E6DA; color: #75070C; }
-.resultado-moeda.coroa { background: #F0E6DA; color: #4F6815; }
+.resultado-moeda.cara { background: #FFEDAB; color: #75070C; }
+.resultado-moeda.coroa { background: #FFEDAB; color: #4F6815; }
 
 .historico {
     margin-top: 30px;
     padding: 20px;
-    background: #F0E6DA;
-    border: 3px solid #4F6815;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
 }
 
 .historico h3 {
     margin-bottom: 15px;
     color: #75070C;
     font-family: monospace;
-    text-transform: uppercase;
 }
 
 .historico-list {
@@ -484,24 +416,46 @@ h2 {
     justify-content: space-between;
     padding: 10px;
     margin: 5px 0;
-    background: #FFEDAB;
-    border-left: 4px solid #75070C;
+    background: #F0E6DA;
+    border-left: 3px solid #75070C;
     font-family: monospace;
+}
+
+/* Botão Instalar App */
+.install-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #75070C;
+    color: #FFEDAB;
+    border: none;
+    padding: 12px 20px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 9999;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.1s;
+}
+
+.install-btn:active {
+    transform: translate(2px, 2px);
 }
 
 /* Admin */
 .admin-section {
-    background: #F0E6DA;
+    background: #FFEDAB;
     padding: 20px;
     margin: 20px 0;
-    border: 3px solid #4F6815;
-    box-shadow: 5px 5px 0 #75070C;
+    border: 2px solid #4F6815;
 }
 
 .form-group input, .form-group textarea {
     padding: 10px;
     border: 2px solid #4F6815;
-    background: #FFEDAB;
+    background: #F0E6DA;
     font-family: monospace;
 }
 
@@ -526,22 +480,29 @@ h2 {
     }
     
     .icon-circle {
-        width: 75px;
-        height: 75px;
+        width: 65px;
+        height: 65px;
     }
     
     .icon-circle img {
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .home-icon span {
+        font-size: 1em;
     }
     
     .home-container h1 {
-        font-size: 1.5em;
-        padding: 10px 20px;
+        font-size: 2em;
     }
     
     .moeda {
-        width: 120px;
-        height: 120px;
+        width: 160px;
+        height: 160px;
+    }
+    
+    .moeda .cara, .moeda .coroa {
+        font-size: 4em;
     }
 }

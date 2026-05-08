@@ -2,22 +2,24 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Roleta</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#75070C">
 </head>
 <body>
     <div class="container">
-        <button class="back-btn" onclick="goBack()">← Voltar</button>
+        <button class="back-btn" onclick="goBack()">← voltar</button>
         
-        <h2>🎡 Roda da Sorte 🎡</h2>
+        <h2>roleta (quase) russa</h2>
         
         <div class="roleta-wrapper">
             <canvas id="roletaCanvas" width="400" height="400"></canvas>
             <div class="ponteiro">▼</div>
         </div>
         
-        <button id="girarBtn" class="action-btn">Girar</button>
+        <button id="girarBtn" class="action-btn">girar</button>
         
         <div id="resultado" class="resultado"></div>
     </div>
