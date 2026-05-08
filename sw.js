@@ -1,15 +1,12 @@
-const CACHE_NAME = 'morangoapp-v2';
+const CACHE_NAME = 'app-magico-v2';
 const urlsToCache = [
   '/',
   '/index.html',
   '/roleta.html',
   '/tickets.html',
   '/frases.html',
-  '/caracoroa.html',
-  '/admin.html',
   '/style.css',
   '/script.js',
-  '/admin.js',
   '/manifest.json'
 ];
 
@@ -17,7 +14,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
-      .then(() => self.skipWaiting())  // ← IMPORTANTE: força ativação
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -38,6 +35,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => self.clients.claim())  // ← IMPORTANTE: assume controle
+    }).then(() => self.clients.claim())
   );
 });

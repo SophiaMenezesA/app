@@ -218,74 +218,49 @@ if (window.location.pathname.includes('tickets.html')) {
     function carregarTickets() {
         const tickets = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS));
         const resgatados = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS_RESGATADOS));
-        
-        // Separar tickets disponíveis e resgatados
-        const disponiveis = tickets.filter(t => !resgatados.includes(t.id));
-        const resgatadosList = tickets.filter(t => resgatados.includes(t.id));
-        
-        // Container dos disponíveis
-        const containerDisponiveis = document.getElementById('ticketsList');
-        if (containerDisponiveis) {
-            if (disponiveis.length === 0) {
-                containerDisponiveis.innerHTML = '<div class="empty-state">🍓 nenhum ticket disponível no momento</div>';
-            } else {
-                containerDisponiveis.innerHTML = '';
-                disponiveis.forEach(ticket => {
-                    const card = document.createElement('div');
-                    card.className = 'ticket-card';
-                    card.innerHTML = `
-                        <div class="ticket-info">
-                            <h3>${ticket.titulo}</h3>
-                            <p>${ticket.descricao}</p>
-                        </div>
-                        <button class="resgatar-btn" data-id="${ticket.id}">🎁 resgatar</button>
-                    `;
-                    const btn = card.querySelector('.resgatar-btn');
-                    btn.onclick = () => resgatarTicket(ticket.id, ticket.titulo);
-                    containerDisponiveis.appendChild(card);
-                });
+        const container = document.getElementById('ticketsList');
+
+        container.innerHTML = '';
+
+        tickets.forEach(ticket => {
+            const resgatado = resgatados.includes(ticket.id);
+            const card = document.createElement('div');
+            card.className = `ticket-card ${resgatado ? 'resgatado' : ''}`;
+            card.innerHTML = `
+                <div class="ticket-info">
+                    <h3>${ticket.titulo}</h3>
+                    <p>${ticket.descricao}</p>
+                </div>
+                <button class="resgatar-btn" ${resgatado ? 'disabled' : ''} data-id="${ticket.id}">
+                    ${resgatado ? '✓ Resgatado' : '🎁 Resgatar'}
+                </button>
+            `;
+
+            const btn = card.querySelector('.resgatar-btn');
+            if (!resgatado) {
+                btn.onclick = () => resgatarTicket(ticket.id, ticket.titulo);
             }
-        }
-        
-        // Container dos resgatados
-        const containerResgatados = document.getElementById('ticketsResgatadosList');
-        if (containerResgatados) {
-            if (resgatadosList.length === 0) {
-                containerResgatados.innerHTML = '<div class="empty-state">✨ nenhum ticket resgatado ainda</div>';
-            } else {
-                containerResgatados.innerHTML = '';
-                resgatadosList.forEach(ticket => {
-                    const card = document.createElement('div');
-                    card.className = 'ticket-card resgatado-card';
-                    card.innerHTML = `
-                        <div class="ticket-info">
-                            <h3>✓ ${ticket.titulo}</h3>
-                            <p>${ticket.descricao}</p>
-                        </div>
-                        <span class="resgatado-badge">resgatado</span>
-                    `;
-                    containerResgatados.appendChild(card);
-                });
-            }
-        }
+
+            container.appendChild(card);
+        });
     }
-    
+
     function resgatarTicket(id, titulo) {
         const resgatados = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS_RESGATADOS));
         if (!resgatados.includes(id)) {
             resgatados.push(id);
             localStorage.setItem(STORAGE_KEYS.TICKETS_RESGATADOS, JSON.stringify(resgatados));
-            
+
             // Mostrar toast
             const toast = document.getElementById('toast');
-            toast.textContent = `🍓 ${titulo} resgatado com sucesso!!`;
+            toast.textContent = `🎫 ${titulo} resgatado com sucesso!!`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
-            
-            carregarTickets(); // Recarregar a lista
+
+            carregarTickets();
         }
     }
-    
+
     carregarTickets();
 }
 
@@ -363,96 +338,43 @@ if (window.location.pathname.includes('frases.html')) {
 // Inicialização
 initData();
 
-// ============ PWA - INSTALAÇÃO FORÇADA ============
-let deferredPrompt;
-let installButton = null;
-
-// Registrar Service Worker
+// ============ SERVICE WORKER (PWA) ============
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('✅ Service Worker registrado'))
-        .catch(err => console.log('❌ Erro:', err));
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker registrado com sucesso!');
+                console.log('Escopo:', registration.scope);
+            })
+            .catch(error => {
+                console.log('❌ Falha ao registrar Service Worker:', error);
+            });
+    });
 }
 
-// Tentar capturar evento de instalação nativo
+// Verificar se pode instalar
+let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('✅ Evento beforeinstallprompt capturado!');
+    console.log('✅ App pode ser instalado!');
     e.preventDefault();
     deferredPrompt = e;
-    mostrarBotaoInstalar();
-});
 
-// Função para mostrar o botão
-function mostrarBotaoInstalar() {
-    if (installButton) return; // já existe
-    
-    installButton = document.createElement('button');
-    installButton.textContent = '🍓 instalar app';
-    installButton.id = 'pwa-install-btn';
-    installButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #75070C;
-        color: #FFEDAB;
-        border: none;
-        border-radius: 60px;
-        padding: 12px 24px;
-        font-family: 'Courier New', monospace;
-        font-weight: bold;
-        font-size: 0.85rem;
-        cursor: pointer;
-        z-index: 9999;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    `;
-    
-    installButton.onclick = async () => {
-        if (deferredPrompt) {
-            // Instalação nativa
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                console.log('App instalado!');
-                installButton.remove();
-                installButton = null;
+    // Opcional: mostrar um botão "Instalar" no app
+    const installBtn = document.createElement('button');
+    installBtn.textContent = '📱 Instalar App';
+    installBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#6C63FF;color:white;border:none;padding:12px 20px;border-radius:50px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+    installBtn.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuário aceitou instalar');
             }
             deferredPrompt = null;
-        } else {
-            // Fallback: mostrar instruções
-            alert('🍓 Para instalar o app:\n\n1. Toque nos 3 pontinhos ⋮\n2. Selecione "Instalar app" ou "Adicionar à tela inicial"\n3. Confirme a instalação');
-        }
+            installBtn.remove();
+        });
     };
-    
-    document.body.appendChild(installButton);
-}
-
-// Se o evento beforeinstallprompt não disparar em 3 segundos, mostra botão alternativo
-setTimeout(() => {
-    if (!installButton && !deferredPrompt) {
-        console.log('⚠️ Evento beforeinstallprompt não detectado, mostrando botão alternativo');
-        mostrarBotaoInstalar();
-    }
-}, 3000);
-
-// Se já estiver instalado, remove botão
-window.addEventListener('appinstalled', () => {
-    if (installButton) {
-        installButton.remove();
-        installButton = null;
-    }
-    deferredPrompt = null;
+    document.body.appendChild(installBtn);
 });
-
-// Verificar se já está instalado (via localStorage)
-if (window.matchMedia('(display-mode: standalone)').matches) {
-    console.log('App já está instalado (modo standalone)');
-    if (installButton) {
-        installButton.remove();
-        installButton = null;
-    }
-}
 
 // ============ CARA OU COROA ============
 // Primeiro, define o path baseado na URL atual
@@ -654,6 +576,16 @@ if (isHomePage) {
                 this.classList.add('active');
             });
         });
+    });
+}
+
+// Forçar limpeza do cache do Service Worker (para atualizar)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+            registration.unregister();
+            console.log('Service Worker desregistrado');
+        }
     });
 }
 
