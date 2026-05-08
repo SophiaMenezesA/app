@@ -218,52 +218,76 @@ if (window.location.pathname.includes('tickets.html')) {
     function carregarTickets() {
         const tickets = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS));
         const resgatados = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS_RESGATADOS));
-        const container = document.getElementById('ticketsList');
-
-        container.innerHTML = '';
-
-        tickets.forEach(ticket => {
-            const resgatado = resgatados.includes(ticket.id);
-            const card = document.createElement('div');
-            card.className = `ticket-card ${resgatado ? 'resgatado' : ''}`;
-            card.innerHTML = `
-                <div class="ticket-info">
-                    <h3>${ticket.titulo}</h3>
-                    <p>${ticket.descricao}</p>
-                </div>
-                <button class="resgatar-btn" ${resgatado ? 'disabled' : ''} data-id="${ticket.id}">
-                    ${resgatado ? '✓ Resgatado' : '🎁 Resgatar'}
-                </button>
-            `;
-
-            const btn = card.querySelector('.resgatar-btn');
-            if (!resgatado) {
-                btn.onclick = () => resgatarTicket(ticket.id, ticket.titulo);
+        
+        // Separar tickets disponíveis e resgatados
+        const disponiveis = tickets.filter(t => !resgatados.includes(t.id));
+        const resgatadosList = tickets.filter(t => resgatados.includes(t.id));
+        
+        // Container dos disponíveis
+        const containerDisponiveis = document.getElementById('ticketsList');
+        if (containerDisponiveis) {
+            if (disponiveis.length === 0) {
+                containerDisponiveis.innerHTML = '<div class="empty-state">🍓 nenhum ticket disponível no momento</div>';
+            } else {
+                containerDisponiveis.innerHTML = '';
+                disponiveis.forEach(ticket => {
+                    const card = document.createElement('div');
+                    card.className = 'ticket-card';
+                    card.innerHTML = `
+                        <div class="ticket-info">
+                            <h3>${ticket.titulo}</h3>
+                            <p>${ticket.descricao}</p>
+                        </div>
+                        <button class="resgatar-btn" data-id="${ticket.id}">🎁 resgatar</button>
+                    `;
+                    const btn = card.querySelector('.resgatar-btn');
+                    btn.onclick = () => resgatarTicket(ticket.id, ticket.titulo);
+                    containerDisponiveis.appendChild(card);
+                });
             }
-
-            container.appendChild(card);
-        });
+        }
+        
+        // Container dos resgatados
+        const containerResgatados = document.getElementById('ticketsResgatadosList');
+        if (containerResgatados) {
+            if (resgatadosList.length === 0) {
+                containerResgatados.innerHTML = '<div class="empty-state">✨ nenhum ticket resgatado ainda</div>';
+            } else {
+                containerResgatados.innerHTML = '';
+                resgatadosList.forEach(ticket => {
+                    const card = document.createElement('div');
+                    card.className = 'ticket-card resgatado-card';
+                    card.innerHTML = `
+                        <div class="ticket-info">
+                            <h3>✓ ${ticket.titulo}</h3>
+                            <p>${ticket.descricao}</p>
+                        </div>
+                        <span class="resgatado-badge">resgatado</span>
+                    `;
+                    containerResgatados.appendChild(card);
+                });
+            }
+        }
     }
-
+    
     function resgatarTicket(id, titulo) {
         const resgatados = JSON.parse(localStorage.getItem(STORAGE_KEYS.TICKETS_RESGATADOS));
         if (!resgatados.includes(id)) {
             resgatados.push(id);
             localStorage.setItem(STORAGE_KEYS.TICKETS_RESGATADOS, JSON.stringify(resgatados));
-
+            
             // Mostrar toast
             const toast = document.getElementById('toast');
-            toast.textContent = `🎫 ${titulo} resgatado com sucesso!!`;
+            toast.textContent = `🍓 ${titulo} resgatado com sucesso!!`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
-
-            carregarTickets();
+            
+            carregarTickets(); // Recarregar a lista
         }
     }
-
+    
     carregarTickets();
 }
-
 // ============ FRASES ============
 if (window.location.pathname.includes('frases.html')) {
     let fraseAtual = '';
