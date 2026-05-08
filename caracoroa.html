@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cara ou Coroa</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#6C63FF">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">← Voltar</button>
+        
+        <h2>🪙 Cara ou Coroa 🪙</h2>
+        
+        <div class="moeda-container">
+            <div class="moeda" id="moeda">
+                <div class="cara">🪙</div>
+                <div class="coroa">💰</div>
+            </div>
+        </div>
+        
+        <div class="resultado-moeda" id="resultadoMoeda"></div>
+        
+        <button id="jogarBtn" class="action-btn">🎲 Jogar Moeda 🎲</button>
+        
+        <div class="historico">
+            <h3>📜 Histórico</h3>
+            <div id="historicoList" class="historico-list"></div>
+            <button id="limparHistoricoBtn" class="secondary-btn">🗑️ Limpar Histórico</button>
+        </div>
+    </div>
+    
+    <script src="./script.js"></script>
+</body>
+</html>

@@ -362,6 +362,151 @@ window.addEventListener('beforeinstallprompt', (e) => {
     document.body.appendChild(installBtn);
 }); 
 
+// ============ CARA OU COROA ============
+if (path.includes('caracoroa.html')) {
+    console.log('🪙 Carregando Cara ou Coroa...');
+    
+    const STORAGE_HISTORICO = 'app_caracoroa_historico';
+    
+    // Inicializar histórico
+    if (!localStorage.getItem(STORAGE_HISTORICO)) {
+        localStorage.setItem(STORAGE_HISTORICO, JSON.stringify([]));
+    }
+    
+    let jogando = false;
+    let resultadoAtual = null;
+    
+    function jogarMoeda() {
+        if (jogando) return;
+        
+        jogando = true;
+        const moeda = document.getElementById('moeda');
+        const resultadoDiv = document.getElementById('resultadoMoeda');
+        const jogarBtn = document.getElementById('jogarBtn');
+        
+        // Desabilitar botão durante animação
+        jogarBtn.disabled = true;
+        jogarBtn.style.opacity = '0.6';
+        
+        // Sortear resultado (0 = cara, 1 = coroa)
+        const resultado = Math.random() < 0.5 ? 'cara' : 'coroa';
+        
+        // Adicionar animação
+        moeda.classList.add('girando');
+        
+        // Remover classe anterior
+        moeda.classList.remove('virada-cara', 'virada-coroa');
+        
+        // Forçar reflow para reiniciar animação
+        void moeda.offsetWidth;
+        
+        // Mostrar resultado após animação
+        setTimeout(() => {
+            moeda.classList.remove('girando');
+            
+            if (resultado === 'cara') {
+                moeda.classList.add('virada-cara');
+                resultadoDiv.innerHTML = `
+                    <div style="font-size: 3em;">🪙</div>
+                    <div><strong>CARAAAAAA! 🎉</strong></div>
+                    <div>Deu cara!</div>
+                `;
+                resultadoDiv.className = 'resultado-moeda cara';
+            } else {
+                moeda.classList.add('virada-coroa');
+                resultadoDiv.innerHTML = `
+                    <div style="font-size: 3em;">💰</div>
+                    <div><strong>COROAAAAA! 🎉</strong></div>
+                    <div>Deu coroa!</div>
+                `;
+                resultadoDiv.className = 'resultado-moeda coroa';
+            }
+            
+            // Salvar no histórico
+            salvarHistorico(resultado);
+            
+            // Carregar histórico atualizado
+            carregarHistorico();
+            
+            // Reabilitar botão
+            jogando = false;
+            jogarBtn.disabled = false;
+            jogarBtn.style.opacity = '1';
+            
+            // Efeito de vibração (se suportado)
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+        }, 800);
+    }
+    
+    function salvarHistorico(resultado) {
+        const historico = JSON.parse(localStorage.getItem(STORAGE_HISTORICO));
+        const novoRegistro = {
+            resultado: resultado,
+            data: new Date().toLocaleString('pt-BR'),
+            timestamp: Date.now()
+        };
+        
+        historico.unshift(novoRegistro); // Adiciona no início
+        
+        // Manter apenas os últimos 20 registros
+        if (historico.length > 20) {
+            historico.pop();
+        }
+        
+        localStorage.setItem(STORAGE_HISTORICO, JSON.stringify(historico));
+    }
+    
+    function carregarHistorico() {
+        const historico = JSON.parse(localStorage.getItem(STORAGE_HISTORICO));
+        const container = document.getElementById('historicoList');
+        
+        if (!container) return;
+        
+        if (historico.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#999;">Nenhuma jogada ainda. Jogue a moeda! 🪙</p>';
+            return;
+        }
+        
+        container.innerHTML = historico.map(item => `
+            <div class="historico-item">
+                <span class="resultado ${item.resultado}">
+                    ${item.resultado === 'cara' ? '🪙 Cara' : '💰 Coroa'}
+                </span>
+                <span class="data">${item.data}</span>
+            </div>
+        `).join('');
+    }
+    
+    function limparHistorico() {
+        if (confirm('Tem certeza que quer limpar todo o histórico?')) {
+            localStorage.setItem(STORAGE_HISTORICO, JSON.stringify([]));
+            carregarHistorico();
+            
+            // Mostrar notificação
+            const toast = document.createElement('div');
+            toast.textContent = '🗑️ Histórico limpo com sucesso!';
+            toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:10px 20px;border-radius:50px;z-index:1000;';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+    }
+    
+    // Configurar eventos
+    const jogarBtn = document.getElementById('jogarBtn');
+    const limparBtn = document.getElementById('limparHistoricoBtn');
+    
+    if (jogarBtn) jogarBtn.onclick = jogarMoeda;
+    if (limparBtn) limparBtn.onclick = limparHistorico;
+    
+    // Carregar histórico inicial
+    carregarHistorico();
+    
+    // Animação sutil ao carregar
+    console.log('✅ Cara ou Coroa inicializado!');
+}
+
 // Navegação da tela inicial
 if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
     document.querySelectorAll('.home-icon').forEach(icon => {
