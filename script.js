@@ -363,7 +363,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
 }); 
 
 // ============ CARA OU COROA ============
-if (path.includes('caracoroa.html')) {
+// Primeiro, define o path baseado na URL atual
+const currentPath = window.location.pathname;
+
+if (currentPath.includes('caracoroa.html')) {
     console.log('🪙 Carregando Cara ou Coroa...');
     
     const STORAGE_HISTORICO = 'app_caracoroa_historico';
@@ -374,7 +377,6 @@ if (path.includes('caracoroa.html')) {
     }
     
     let jogando = false;
-    let resultadoAtual = null;
     
     function jogarMoeda() {
         if (jogando) return;
@@ -384,9 +386,16 @@ if (path.includes('caracoroa.html')) {
         const resultadoDiv = document.getElementById('resultadoMoeda');
         const jogarBtn = document.getElementById('jogarBtn');
         
+        if (!moeda) {
+            console.error('Moeda não encontrada!');
+            return;
+        }
+        
         // Desabilitar botão durante animação
-        jogarBtn.disabled = true;
-        jogarBtn.style.opacity = '0.6';
+        if (jogarBtn) {
+            jogarBtn.disabled = true;
+            jogarBtn.style.opacity = '0.6';
+        }
         
         // Sortear resultado (0 = cara, 1 = coroa)
         const resultado = Math.random() < 0.5 ? 'cara' : 'coroa';
@@ -397,41 +406,50 @@ if (path.includes('caracoroa.html')) {
         // Remover classe anterior
         moeda.classList.remove('virada-cara', 'virada-coroa');
         
-        // Forçar reflow para reiniciar animação
-        void moeda.offsetWidth;
-        
         // Mostrar resultado após animação
         setTimeout(() => {
             moeda.classList.remove('girando');
             
             if (resultado === 'cara') {
                 moeda.classList.add('virada-cara');
-                resultadoDiv.innerHTML = `
-                    <div style="font-size: 3em;">🪙</div>
-                    <div><strong>CARAAAAAA! 🎉</strong></div>
-                    <div>Deu cara!</div>
-                `;
-                resultadoDiv.className = 'resultado-moeda cara';
+                if (resultadoDiv) {
+                    resultadoDiv.innerHTML = `
+                        <div style="font-size: 3em;">🪙</div>
+                        <div><strong>CARAAAAAA! 🎉</strong></div>
+                        <div>Deu cara!</div>
+                    `;
+                    resultadoDiv.className = 'resultado-moeda cara';
+                }
             } else {
                 moeda.classList.add('virada-coroa');
-                resultadoDiv.innerHTML = `
-                    <div style="font-size: 3em;">💰</div>
-                    <div><strong>COROAAAAA! 🎉</strong></div>
-                    <div>Deu coroa!</div>
-                `;
-                resultadoDiv.className = 'resultado-moeda coroa';
+                if (resultadoDiv) {
+                    resultadoDiv.innerHTML = `
+                        <div style="font-size: 3em;">💰</div>
+                        <div><strong>COROAAAAA! 🎉</strong></div>
+                        <div>Deu coroa!</div>
+                    `;
+                    resultadoDiv.className = 'resultado-moeda coroa';
+                }
             }
             
             // Salvar no histórico
-            salvarHistorico(resultado);
+            const historico = JSON.parse(localStorage.getItem(STORAGE_HISTORICO));
+            historico.unshift({
+                resultado: resultado,
+                data: new Date().toLocaleString('pt-BR'),
+                timestamp: Date.now()
+            });
+            if (historico.length > 20) historico.pop();
+            localStorage.setItem(STORAGE_HISTORICO, JSON.stringify(historico));
             
-            // Carregar histórico atualizado
             carregarHistorico();
             
             // Reabilitar botão
             jogando = false;
-            jogarBtn.disabled = false;
-            jogarBtn.style.opacity = '1';
+            if (jogarBtn) {
+                jogarBtn.disabled = false;
+                jogarBtn.style.opacity = '1';
+            }
             
             // Efeito de vibração (se suportado)
             if (navigator.vibrate) {
@@ -448,9 +466,8 @@ if (path.includes('caracoroa.html')) {
             timestamp: Date.now()
         };
         
-        historico.unshift(novoRegistro); // Adiciona no início
+        historico.unshift(novoRegistro);
         
-        // Manter apenas os últimos 20 registros
         if (historico.length > 20) {
             historico.pop();
         }
@@ -484,7 +501,6 @@ if (path.includes('caracoroa.html')) {
             localStorage.setItem(STORAGE_HISTORICO, JSON.stringify([]));
             carregarHistorico();
             
-            // Mostrar notificação
             const toast = document.createElement('div');
             toast.textContent = '🗑️ Histórico limpo com sucesso!';
             toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:10px 20px;border-radius:50px;z-index:1000;';
@@ -503,16 +519,5 @@ if (path.includes('caracoroa.html')) {
     // Carregar histórico inicial
     carregarHistorico();
     
-    // Animação sutil ao carregar
     console.log('✅ Cara ou Coroa inicializado!');
-}
-
-// Navegação da tela inicial
-if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
-    document.querySelectorAll('.home-icon').forEach(icon => {
-        icon.addEventListener('click', () => {
-            const page = icon.dataset.page;
-            window.location.href = `${page}.html`;
-        });
-    });
 }
