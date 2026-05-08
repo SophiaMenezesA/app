@@ -1,13 +1,10 @@
 {
   "name": "morangoAPP",
   "short_name": "morangoAPP",
-  "description": "feito para o meu amor",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "theme_color": "#75070C",
   "background_color": "#F0E6DA",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icons/app-icon-72.png",

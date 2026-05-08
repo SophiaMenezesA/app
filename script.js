@@ -363,45 +363,36 @@ if (window.location.pathname.includes('frases.html')) {
 // Inicialização
 initData();
 
-// ============ SERVICE WORKER E BOTÃO INSTALAR ============
+// ============ PWA - INSTALAÇÃO ============
 let deferredPrompt;
-let installButtonVisible = false;
 
 // Registrar Service Worker
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker registrado');
-            })
-            .catch(error => {
-                console.log('❌ Service Worker falhou:', error);
-            });
-    });
+    navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('✅ Service Worker registrado'))
+        .catch(err => console.log('❌ Erro:', err));
 }
 
-// Detectar quando pode instalar
+// Capturar evento de instalação
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('✅ App pode ser instalado!');
+    console.log('✅ Pode instalar!');
     e.preventDefault();
     deferredPrompt = e;
-    installButtonVisible = true;
     
-    // Mostrar botão de instalar
-    mostrarBotaoInstalar();
+    // Criar botão de instalação
+    criarBotaoInstalar();
 });
 
-// Função para mostrar o botão
-function mostrarBotaoInstalar() {
+function criarBotaoInstalar() {
     // Remove botão antigo se existir
-    const oldBtn = document.querySelector('.install-pwa-btn');
-    if (oldBtn) oldBtn.remove();
+    const btnAntigo = document.getElementById('pwa-install-btn');
+    if (btnAntigo) btnAntigo.remove();
     
     // Criar novo botão
-    const installBtn = document.createElement('button');
-    installBtn.textContent = '📱 instalar app';
-    installBtn.className = 'install-pwa-btn';
-    installBtn.style.cssText = `
+    const btn = document.createElement('button');
+    btn.id = 'pwa-install-btn';
+    btn.textContent = '📱 instalar app';
+    btn.style.cssText = `
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -409,42 +400,34 @@ function mostrarBotaoInstalar() {
         color: #FFEDAB;
         border: none;
         border-radius: 60px;
-        padding: 12px 20px;
+        padding: 12px 24px;
         font-family: 'Courier New', monospace;
         font-weight: bold;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         cursor: pointer;
         z-index: 9999;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        text-transform: uppercase;
-        letter-spacing: 1px;
     `;
     
-    installBtn.onclick = async () => {
+    btn.onclick = async () => {
         if (deferredPrompt) {
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Usuário ${outcome} a instalação`);
+            if (outcome === 'accepted') {
+                btn.remove();
+            }
             deferredPrompt = null;
-            installBtn.remove();
         }
     };
     
-    document.body.appendChild(installBtn);
+    document.body.appendChild(btn);
 }
 
-// Se o app já estiver instalado, esconder botão
+// Se já estiver instalado, não mostra botão
 window.addEventListener('appinstalled', () => {
-    console.log('App instalado com sucesso!');
-    const btn = document.querySelector('.install-pwa-btn');
+    const btn = document.getElementById('pwa-install-btn');
     if (btn) btn.remove();
-    deferredPrompt = null;
 });
-
-// Para navegadores que não suportam (mostrar mensagem sutil)
-if (!('serviceWorker' in navigator)) {
-    console.log('Navegador não suporta PWA');
-}
 
 // ============ CARA OU COROA ============
 // Primeiro, define o path baseado na URL atual
