@@ -1,7 +1,7 @@
 {
   "name": "morangoAPP",
   "short_name": "morangoAPP",
-  "description": "feito para o meu amor como um teste",
+  "description": "feito para o meu amor",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -721,3 +721,30 @@ body {
     background: #e0d5c4;
     cursor: default;
 }
+
+/* ============ AJUSTES ROLETA CELULAR ============ */
+@media (max-width: 600px) {
+    .roleta-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+    }
+    
+    #roletaCanvas {
+        width: 280px !important;
+        height: 280px !important;
+        max-width: 100%;
+    }
+    
+    .ponteiro {
+        top: -20px;
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    #roletaCanvas {
+        width: 250px !important;
+        height: 250px !important;
+    }
+}

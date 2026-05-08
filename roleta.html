@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,22 +9,25 @@
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#75070C">
 </head>
+
 <body>
     <div class="container">
         <button class="back-btn" onclick="goBack()">← voltar</button>
-        
+
         <h1 class="page-title">roleta (quase) russa</h1>
-        
+
         <div class="roleta-wrapper">
-            <canvas id="roletaCanvas" width="400" height="400"></canvas>
+            <canvas id="roletaCanvas" width="350" height="350"
+                style="width: 100%; height: auto; max-width: 350px;"></canvas>
             <div class="ponteiro">▼</div>
         </div>
-        
+
         <button id="girarBtn" class="action-btn">girar</button>
-        
+
         <div id="resultado" class="resultado"></div>
     </div>
-    
+
     <script src="./script.js"></script>
 </body>
+
 </html>
