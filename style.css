@@ -27,7 +27,19 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* ============ ELEMENTOS FLUTUANTES ============ */
+/* Container para as outras páginas */
+.container {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    background: #F0E6DA;
+    border-radius: 48px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ============ ELEMENTOS FLUTUANTES (só no index) ============ */
 .floating-menu {
     position: absolute;
     top: 30px;
@@ -38,27 +50,6 @@ body {
     display: flex;
     gap: 20px;
     z-index: 10;
-}
-
-.menu-item {
-    color: #FFEDAB;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    padding: 4px 8px;
-    border-radius: 30px;
-}
-
-.menu-item.active {
-    background: #FFEDAB;
-    color: #75070C;
-}
-
-.menu-item:hover {
-    opacity: 0.8;
 }
 
 .floating-card {
@@ -75,55 +66,19 @@ body {
     border: 2px solid #4F6815;
 }
 
-.floating-card-icon {
-    font-size: 1.2rem;
-}
-
-.floating-card-text {
-    font-family: 'Courier New', monospace;
-    font-size: 0.8rem;
-    color: #75070C;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.floating-card-number {
-    background: #75070C;
-    color: #FFEDAB;
-    border-radius: 30px;
-    padding: 2px 8px;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-/* ============ HERO SECTION ============ */
+/* ============ HERO SECTION (só no index) ============ */
 .hero-section {
     background: linear-gradient(135deg, #75070C 0%, #4F6815 100%);
     border-radius: 32px;
-    padding: 80px 50px;
+    padding: 60px 40px;
     margin-bottom: 50px;
     position: relative;
     overflow: hidden;
 }
 
-.hero-section::before {
-    content: "🍓";
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    font-size: 150px;
-    opacity: 0.1;
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
 .hero-title {
     font-family: 'Courier New', monospace;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 800;
     color: #FFEDAB;
     text-transform: lowercase;
@@ -133,10 +88,9 @@ body {
 
 .hero-subtitle {
     font-family: 'Courier New', monospace;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #F0E6DA;
     margin-bottom: 24px;
-    opacity: 0.9;
 }
 
 .hero-badge {
@@ -144,16 +98,15 @@ body {
     background: rgba(255, 237, 171, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 60px;
-    padding: 8px 20px;
+    padding: 6px 16px;
 }
 
 .hero-badge span {
     color: #FFEDAB;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    font-size: 0.75rem;
 }
 
-/* ============ LAYOUT 2 COLUNAS ASSIMÉTRICAS ============ */
+/* ============ LAYOUT 2 COLUNAS (só no index) ============ */
 .two-columns {
     display: flex;
     gap: 30px;
@@ -170,62 +123,42 @@ body {
     min-width: 300px;
 }
 
-/* ============ CARD VERTICAL ESQUERDO ============ */
+/* Card vertical */
 .vertical-card {
     background: #FFEDAB;
     border-radius: 28px;
-    padding: 32px 24px;
+    padding: 28px 24px;
     border: 2px solid #4F6815;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.vertical-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .vertical-card-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 16px;
 }
 
 .vertical-card-title {
     font-family: 'Courier New', monospace;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #75070C;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-transform: lowercase;
 }
 
 .vertical-card-desc {
     font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #4F6815;
-    line-height: 1.4;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .vertical-card-image {
-    background: linear-gradient(135deg, #F0E6DA 0%, #e0d5c4 100%);
+    background: #F0E6DA;
     border-radius: 20px;
-    height: 120px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-}
-
-.vertical-card-image::after {
-    content: "✨";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    opacity: 0.5;
+    height: 100px;
+    margin-bottom: 20px;
 }
 
 .vertical-card-btn {
@@ -233,59 +166,51 @@ body {
     color: #FFEDAB;
     border: none;
     border-radius: 60px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    width: 100%;
 }
 
-.vertical-card-btn:active {
-    transform: translateX(4px);
-}
-
-/* ============ FEED/LISTA EDITORIAL ============ */
+/* Feed */
 .feed-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
 .feed-item {
     background: #FFEDAB;
     border-radius: 24px;
-    padding: 20px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
     cursor: pointer;
-    transition: all 0.2s;
     border: 2px solid #4F6815;
+    transition: all 0.2s;
 }
 
 .feed-item:hover {
-    transform: translateX(8px);
+    transform: translateX(6px);
     border-color: #75070C;
 }
 
 .feed-icon {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     background: #F0E6DA;
-    border-radius: 20px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
 }
 
 .feed-icon img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+    width: 35px;
+    height: 35px;
 }
 
 .feed-content {
@@ -294,29 +219,397 @@ body {
 
 .feed-title {
     font-family: 'Courier New', monospace;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #75070C;
-    margin-bottom: 4px;
     text-transform: lowercase;
 }
 
 .feed-desc {
     font-family: 'Courier New', monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #4F6815;
 }
 
 .feed-arrow {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #75070C;
-    opacity: 0.6;
-    transition: opacity 0.2s;
 }
 
-.feed-item:hover .feed-arrow {
-    opacity: 1;
+/* ============ BOTÃO VOLTAR (para todas as páginas) ============ */
+.back-btn {
+    background: #75070C;
+    border: none;
+    border-radius: 60px;
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    color: #FFEDAB;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.1s;
+    display: inline-block;
+}
+
+.back-btn:active {
     transform: translateX(4px);
+}
+
+/* ============ TÍTULOS DAS PÁGINAS ============ */
+.page-title {
+    font-family: 'Courier New', monospace;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #75070C;
+    text-align: left;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    border-left: 5px solid #4F6815;
+    padding-left: 20px;
+}
+
+/* ============ ROLETA ============ */
+.roleta-wrapper {
+    position: relative;
+    margin: 30px auto;
+    width: fit-content;
+}
+
+#roletaCanvas {
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 3px solid #4F6815;
+}
+
+.ponteiro {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    color: #75070C;
+    z-index: 10;
+    filter: drop-shadow(2px 4px 0 #4F6815);
+}
+
+.action-btn {
+    background: #75070C;
+    color: #FFEDAB;
+    border: none;
+    border-radius: 60px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    width: 200px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.1s;
+}
+
+.action-btn:active {
+    transform: translateX(4px);
+}
+
+.resultado {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
+    padding: 16px;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 20px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #75070C;
+}
+
+/* ============ TICKETS ============ */
+.tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ticket-card {
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.ticket-card:active {
+    transform: translateX(4px);
+}
+
+.ticket-card.resgatado {
+    opacity: 0.6;
+    background: #e0d5c4;
+}
+
+.ticket-info h3 {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #75070C;
+    margin-bottom: 5px;
+    text-transform: lowercase;
+}
+
+.ticket-info p {
+    color: #4F6815;
+    font-size: 0.8rem;
+}
+
+.resgatar-btn {
+    background: #75070C;
+    color: #FFEDAB;
+    border: none;
+    border-radius: 60px;
+    padding: 8px 18px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.resgatar-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4F6815;
+    color: #FFEDAB;
+    padding: 12px 24px;
+    border-radius: 60px;
+    transition: bottom 0.3s;
+    z-index: 1000;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.toast.show {
+    bottom: 30px;
+}
+
+/* ============ FRASES ============ */
+.gift-box {
+    text-align: center;
+    font-size: 6em;
+    cursor: pointer;
+    margin: 50px 0;
+    transition: all 0.2s;
+}
+
+.gift-box.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+.frase-sorteada {
+    text-align: center;
+    font-size: 1rem;
+    padding: 20px;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 20px;
+    margin: 20px 0;
+    font-family: monospace;
+    font-weight: bold;
+    color: #75070C;
+}
+
+.frase-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.secondary-btn {
+    background: #4F6815;
+    color: #FFEDAB;
+    border: none;
+    border-radius: 60px;
+    padding: 8px 18px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 0.8rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(117, 7, 12, 0.9);
+}
+
+.modal-content {
+    background: #FFEDAB;
+    margin: 20% auto;
+    padding: 25px;
+    width: 80%;
+    max-width: 450px;
+    border-radius: 28px;
+    border: 3px solid #4F6815;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #75070C;
+}
+
+/* ============ CARA OU COROA ============ */
+.moeda-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.moeda {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    cursor: pointer;
+}
+
+.moeda.girando {
+    animation: girarMoeda 0.8s ease-in-out;
+}
+
+@keyframes girarMoeda {
+    0% { transform: rotateY(0deg); }
+    50% { transform: rotateY(1800deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+.moeda .cara, .moeda .coroa {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    background: #FFEDAB;
+    border: 3px solid #4F6815;
+    backface-visibility: hidden;
+}
+
+.moeda .coroa {
+    transform: rotateY(180deg);
+}
+
+.moeda.virada-cara { transform: rotateY(0deg); }
+.moeda.virada-coroa { transform: rotateY(180deg); }
+
+.resultado-moeda {
+    text-align: center;
+    font-size: 1rem;
+    padding: 18px;
+    margin: 20px 0;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.resultado-moeda.cara { color: #75070C; }
+.resultado-moeda.coroa { color: #4F6815; }
+
+.historico {
+    margin-top: 30px;
+    padding: 20px;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 24px;
+}
+
+.historico h3 {
+    font-family: 'Courier New', monospace;
+    color: #75070C;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.historico-list {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.historico-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    background: #F0E6DA;
+    border-radius: 12px;
+    border-left: 3px solid #75070C;
+    font-size: 0.8rem;
+}
+
+/* ============ ADMIN ============ */
+.admin-section {
+    background: #FFEDAB;
+    border-radius: 28px;
+    padding: 24px;
+    margin: 20px 0;
+    border: 2px solid #4F6815;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.form-group input, .form-group textarea {
+    padding: 12px;
+    border: 2px solid #4F6815;
+    border-radius: 16px;
+    background: #F0E6DA;
+    font-family: monospace;
+}
+
+.delete-btn {
+    background: #75070C;
+    color: #FFEDAB;
+    border: none;
+    border-radius: 60px;
+    padding: 5px 12px;
+    cursor: pointer;
 }
 
 /* ============ RESPONSIVO ============ */
@@ -325,74 +618,48 @@ body {
         padding: 16px;
     }
     
-    .app-container {
-        padding: 20px;
+    .app-container, .container {
+        padding: 24px;
         border-radius: 32px;
     }
     
-    .floating-menu {
-        top: 20px;
-        left: 20px;
-        padding: 6px 12px;
-        gap: 12px;
-    }
-    
-    .menu-item {
-        font-size: 0.7rem;
-    }
-    
-    .floating-card {
-        top: 20px;
-        right: 20px;
-        padding: 6px 12px;
-    }
-    
-    .floating-card-text {
-        font-size: 0.7rem;
-    }
-    
     .hero-section {
-        padding: 50px 25px;
+        padding: 40px 25px;
         margin-top: 20px;
     }
     
     .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 0.85rem;
+        font-size: 2.2rem;
     }
     
     .two-columns {
         flex-direction: column;
-        gap: 20px;
     }
     
-    .left-col, .right-col {
-        min-width: 100%;
+    .page-title {
+        font-size: 1.4rem;
     }
     
-    .vertical-card {
-        padding: 24px;
+    .moeda {
+        width: 140px;
+        height: 140px;
     }
     
-    .feed-item {
-        padding: 16px;
+    .moeda .cara, .moeda .coroa {
+        font-size: 3em;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .floating-menu {
+    .floating-menu, .floating-card {
         display: none;
     }
     
-    .floating-card {
-        top: 20px;
-        right: 20px;
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .page-title {
+        font-size: 1.2rem;
     }
 }
