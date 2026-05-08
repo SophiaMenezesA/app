@@ -1,55 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <!-- PWA metas - coloque tudo isso -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="App Mágico">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#6C63FF">
-    <meta name="application-name" content="App Mágico">
-    <link rel="apple-touch-icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236C63FF'/%3E%3Ctext x='50' y='67' font-size='50' text-anchor='middle' fill='white'%3E🎰%3C/text%3E%3C/svg%3E">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>App Interativo</title>
+    <title>SOS Morango</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#6C63FF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SOS Morango">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#75070C">
+    <meta name="application-name" content="SOS Morango">
+    <link rel="apple-touch-icon" href="icons/app-icon-192.png">
 </head>
-
 <body>
     <div class="container home-container">
-        <h1>✨ App Mágico ✨</h1>
+        <h1>SOS<br>MORANGO</h1>
+        <div class="subtitle">✦ retrô vibes ✦</div>
 
         <div class="home-grid">
             <div class="home-icon" data-page="roleta">
-                <div class="icon-circle">
-                    <img src="icons/roleta.png" alt="Roleta" style="width: 60px; height: 60px;">
-                </div>
+                <div class="icon-circle">🎰</div>
                 <span>Roleta</span>
             </div>
 
             <div class="home-icon" data-page="tickets">
-                <div class="icon-circle">
-                    <img src="icons/tickets.png" alt="Tickets" style="width: 60px; height: 60px;">
-                </div>
+                <div class="icon-circle">🎫</div>
                 <span>Tickets</span>
             </div>
 
             <div class="home-icon" data-page="frases">
-                <div class="icon-circle">
-                    <img src="icons/frases.png" alt="Frases" style="width: 60px; height: 60px;">
-                </div>
+                <div class="icon-circle">📦</div>
                 <span>Frases</span>
             </div>
 
             <div class="home-icon" data-page="caracoroa">
-                <div class="icon-circle">
-                    <img src="icons/caracoroa.png" alt="Cara ou Coroa" style="width: 60px; height: 60px;">
-                </div>
+                <div class="icon-circle">🪙</div>
                 <span>Cara ou Coroa</span>
             </div>
         </div>
@@ -57,5 +44,4 @@
 
     <script src="./script.js"></script>
 </body>
-
 </html>
