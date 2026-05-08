@@ -81,49 +81,6 @@
             </div>
         </div>
     </div>
-<!-- Botão de instalar fixo -->
-<button id="installAppBtn" class="install-app-btn">🍓 instalar morangoAPP</button>
-
-<script>
-    // Botão de instalar - funciona em qualquer navegador
-    const installBtn = document.getElementById('installAppBtn');
-    let deferredPrompt = null;
-    
-    // Escuta o evento de instalação
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBtn.style.display = 'flex';
-    });
-    
-    // Clique no botão
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                console.log('App instalado!');
-                installBtn.style.display = 'none';
-            }
-            deferredPrompt = null;
-        } else {
-            // Fallback para navegadores que não suportam o prompt
-            alert('🍓 Toque nos 3 pontinhos do seu navegador e selecione "Adicionar à tela inicial"');
-        }
-    });
-    
-    // Esconde o botão se o app já estiver instalado
-    window.addEventListener('appinstalled', () => {
-        installBtn.style.display = 'none';
-    });
-    
-    // Mostra o botão depois de um tempo se não tiver o evento
-    setTimeout(() => {
-        if (installBtn.style.display !== 'none' && !deferredPrompt) {
-            installBtn.style.display = 'flex';
-        }
-    }, 3000);
-</script>
 
     <script src="./script.js"></script>
 </body>
