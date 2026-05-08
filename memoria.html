@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -9,12 +10,13 @@
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#75070C">
 </head>
+
 <body>
     <div class="container">
         <button class="back-btn" onclick="goBack()">← voltar</button>
-        
+
         <h1 class="page-title">Morango Mnemosyne</h1>
-        
+
         <div class="game-stats">
             <div class="stat">
                 <span class="stat-label">🍓 rodada</span>
@@ -29,29 +31,16 @@
                 <span class="stat-value" id="tentativas">0</span>
             </div>
         </div>
-        
+
         <div class="tabuleiro" id="tabuleiro"></div>
-        
+
         <div class="game-message" id="gameMessage"></div>
-        
-        <div id="ticketModal" class="modal">
-            <div class="modal-content ticket-modal">
-                <span class="close">&times;</span>
-                <div class="ticket-premium">
-                    <div class="ticket-icon">🍓</div>
-                    <h2>🎫 TICKET ESPECIAL!</h2>
-                    <h3>Vale "Morango Selvagem"</h3>
-                    <p>☆ Vale carinho sapeca 🐯 Uaaaarrr ☆</p>
-                    <div class="ticket-code">✦ resgate único ✦</div>
-                    <button id="resgatarTicketBtn" class="action-btn">resgatar ticket</button>
-                </div>
-            </div>
-        </div>
     </div>
-    
+
     <div id="toast" class="toast"></div>
-    
+
     <script src="./script.js"></script>
     <script src="./memoria.js"></script>
 </body>
+
 </html>

@@ -3,7 +3,7 @@ if (window.location.pathname.includes('memoria.html')) {
     console.log('🍓 Iniciando Jogo da Memória...');
     
     // Configuração do jogo
-    const EMOJIS = ['🍍', '🍓', '🍇', '🍌', '🍊', '🍋‍🟩'];
+    const EMOJIS = ['🍌', '🍓', '🍎', '🍍', '🍇', '🍋‍🟩'];
     const TOTAL_PAIRS = EMOJIS.length;
     const TOTAL_CARDS = TOTAL_PAIRS * 2;
     const RODADAS_PARA_TICKET = 3;
@@ -27,8 +27,6 @@ if (window.location.pathname.includes('memoria.html')) {
     const paresRestantesSpan = document.getElementById('paresRestantes');
     const tentativasSpan = document.getElementById('tentativas');
     const gameMessage = document.getElementById('gameMessage');
-    const ticketModal = document.getElementById('ticketModal');
-    const resgatarBtn = document.getElementById('resgatarTicketBtn');
     const toast = document.getElementById('toast');
     
     // Verificar se já ganhou o ticket especial
@@ -71,7 +69,7 @@ if (window.location.pathname.includes('memoria.html')) {
     
     function atualizarStats() {
         rodadaSpan.textContent = rodadaAtual;
-        const paresRestantes = TOTAL_PAIRS - cartasAcertadas.length;
+        const paresRestantes = TOTAL_PAIRS - (cartasAcertadas.length / 2);
         paresRestantesSpan.textContent = paresRestantes;
         tentativasSpan.textContent = tentativas;
     }
@@ -130,7 +128,7 @@ if (window.location.pathname.includes('memoria.html')) {
                 completarRodada();
             } else {
                 atualizarStats();
-                gameMessage.textContent = 'ACERTOOOOOOOOOOOU';
+                gameMessage.textContent = 'ACERTOUUUUU!!!';
                 setTimeout(() => {
                     if (!aguardandoReset && !jogoFinalizado) {
                         gameMessage.textContent = 'Encontre os pares de frutinhas!';
@@ -138,7 +136,7 @@ if (window.location.pathname.includes('memoria.html')) {
                 }, 1000);
             }
         } else {
-            gameMessage.textContent = 'Eita, quase';
+            gameMessage.textContent = 'eita, quase hein';
             setTimeout(() => {
                 cartasViradas = [];
                 bloqueado = false;
@@ -152,26 +150,24 @@ if (window.location.pathname.includes('memoria.html')) {
     
     function completarRodada() {
         if (rodadaAtual < RODADAS_PARA_TICKET) {
-            // Próxima rodada
-            gameMessage.textContent = `rodada ${rodadaAtual} completa! `;
+            gameMessage.textContent = `✨ Rodada ${rodadaAtual} completa! ✨`;
             rodadaAtual++;
             tentativas = 0;
             aguardandoReset = true;
             
             setTimeout(() => {
                 iniciarRodada();
-                gameMessage.textContent = `🍓 rodada ${rodadaAtual} de ${RODADAS_PARA_TICKET}!`;
+                gameMessage.textContent = `🍓 Rodada ${rodadaAtual} de ${RODADAS_PARA_TICKET}!`;
             }, 1500);
         } else {
-            // Completou todas as rodadas!
             jogoFinalizado = true;
-            gameMessage.textContent = 'VOCÊ VENCEEEEUUUU';
+            gameMessage.textContent = 'VOCÊ GANHOUUUU, SABIA QUE CONSEGUIRIA!';
             
             setTimeout(() => {
                 if (!jaGanhouTicket()) {
-                    mostrarTicketEspecial();
+                    criarEmostrarModalTicket();
                 } else {
-                    gameMessage.textContent = 'você já ganhou seu ticket especial, espertinho. Jogue de novo por diversão!';
+                    gameMessage.textContent = 'Você já ganhou seu ticket especial, espertinho. Jogue de novo por diversão!';
                     setTimeout(() => {
                         reiniciarJogoCompleto();
                     }, 2000);
@@ -180,19 +176,56 @@ if (window.location.pathname.includes('memoria.html')) {
         }
     }
     
-    function mostrarTicketEspecial() {
-        ticketModal.style.display = 'block';
+    // Criar modal dinamicamente SÓ QUANDO GANHAR
+    function criarEmostrarModalTicket() {
+        // Criar modal
+        const modal = document.createElement('div');
+        modal.id = 'ticketModal';
+        modal.className = 'modal';
+        modal.style.display = 'block';
+        
+        modal.innerHTML = `
+            <div class="modal-content ticket-modal">
+                <span class="close">&times;</span>
+                <div class="ticket-premium">
+                    <div class="ticket-icon">🍓</div>
+                    <h2>🎫 TICKET ESPECIAL!</h2>
+                    <h3>Vale Morango Selvagem</h3>
+                    <p>☆ Vale uma brincadeirinha sapeca 🐯 Uaaarr ☆</p>
+                    <div class="ticket-code">✦ resgate único ✦</div>
+                    <button id="resgatarTicketBtn" class="action-btn" style="margin-bottom:0;">resgatar ticket</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Fechar modal
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.onclick = () => {
+            modal.remove();
+            reiniciarJogoCompleto();
+        };
+        
+        // Resgatar ticket
+        const resgatarBtn = document.getElementById('resgatarTicketBtn');
+        resgatarBtn.onclick = () => {
+            resgatarTicket();
+            modal.remove();
+        };
+        
+        // Clicar fora
+        window.onclick = (e) => {
+            if (e.target === modal) {
+                modal.remove();
+                reiniciarJogoCompleto();
+            }
+        };
     }
     
     function resgatarTicket() {
-        // Verificar de novo se já ganhou (por segurança)
-        if (jaGanhouTicket()) {
-            ticketModal.style.display = 'none';
-            reiniciarJogoCompleto();
-            return;
-        }
+        if (jaGanhouTicket()) return;
         
-        // Salvar que ganhou o ticket
         salvarTicketGanho();
         
         // Adicionar ticket especial ao sistema de tickets
@@ -200,21 +233,16 @@ if (window.location.pathname.includes('memoria.html')) {
         const novoTicket = {
             id: Date.now(),
             titulo: "Vale Morango Selvagem 🍓",
-            descricao: "Vale um carinho sapeca 🐯 Uaaarr"
+            descricao: " Vale uma brincadeirinha sapeca 🐯 Uaaarr "
         };
         
         tickets.push(novoTicket);
         localStorage.setItem('app_tickets', JSON.stringify(tickets));
         
-        // Fechar modal
-        ticketModal.style.display = 'none';
-        
-        // Mostrar toast
         toast.textContent = 'Ticket Especial resgatado! Vá em "seus tickets" para ver!';
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 4000);
         
-        // Reiniciar jogo
         reiniciarJogoCompleto();
     }
     
@@ -224,27 +252,7 @@ if (window.location.pathname.includes('memoria.html')) {
         aguardandoReset = false;
         jogoFinalizado = false;
         iniciarRodada();
-        gameMessage.textContent = 'Nova partida! divirta-se! ❤️';
-    }
-    
-    // Fechar modal
-    const closeModal = document.querySelector('.close');
-    if (closeModal) {
-        closeModal.onclick = () => {
-            ticketModal.style.display = 'none';
-            reiniciarJogoCompleto();
-        };
-    }
-    
-    window.onclick = (e) => {
-        if (e.target === ticketModal) {
-            ticketModal.style.display = 'none';
-            reiniciarJogoCompleto();
-        }
-    };
-    
-    if (resgatarBtn) {
-        resgatarBtn.onclick = resgatarTicket;
+        gameMessage.textContent = 'Nova partida! divirta-se ❤️';
     }
     
     // Iniciar jogo
