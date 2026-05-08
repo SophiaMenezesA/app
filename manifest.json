@@ -1,7 +1,7 @@
 {
-  "name": "App Mágico",
-  "short_name": "AppMágico",
-  "description": "App com roleta, tickets, frases e cara ou coroa",
+  "name": "Morango App",
+  "short_name": "MorangoApp",
+  "description": "Feito para meu gatão",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

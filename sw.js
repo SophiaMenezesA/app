@@ -1,4 +1,4 @@
-const CACHE_NAME = 'app-magico-v2';
+const CACHE_NAME = 'morangoapp-v2';
 const urlsToCache = [
   '/',
   '/index.html',
