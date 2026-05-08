@@ -1,4 +1,27 @@
 /* ============ TICKETS ============ */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Courier New',monospace;
+    background:#75070C;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
+
+/* Containers */
+.app-container,.container{
+    max-width:1200px;
+    width:100%;
+    margin:0 auto;
+    background:#F0E6DA;
+    border-radius:48px;
+    padding:40px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
+.container{max-width:600px;}
 
 .page-title{
     font-size:1.8rem;
