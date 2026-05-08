@@ -363,36 +363,31 @@ if (window.location.pathname.includes('frases.html')) {
 // Inicialização
 initData();
 
-// ============ PWA - INSTALAÇÃO ============
-let deferredPrompt;
-
-// Registrar Service Worker
+// ============ SERVICE WORKER (PWA) ============
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('✅ Service Worker registrado'))
-        .catch(err => console.log('❌ Erro:', err));
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker registrado com sucesso!');
+                console.log('Escopo:', registration.scope);
+            })
+            .catch(error => {
+                console.log('❌ Falha ao registrar Service Worker:', error);
+            });
+    });
 }
 
-// Capturar evento de instalação
+// Verificar se pode instalar
+let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('✅ Pode instalar!');
+    console.log('✅ App pode ser instalado!');
     e.preventDefault();
     deferredPrompt = e;
-    
-    // Criar botão de instalação
-    criarBotaoInstalar();
-});
 
-function criarBotaoInstalar() {
-    // Remove botão antigo se existir
-    const btnAntigo = document.getElementById('pwa-install-btn');
-    if (btnAntigo) btnAntigo.remove();
-    
-    // Criar novo botão
-    const btn = document.createElement('button');
-    btn.id = 'pwa-install-btn';
-    btn.textContent = '📱 instalar app';
-    btn.style.cssText = `
+    // Botão "Instalar" no app com as cores do Moranguete
+    const installBtn = document.createElement('button');
+    installBtn.textContent = '🍓 instalar app';
+    installBtn.style.cssText = `
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -400,33 +395,28 @@ function criarBotaoInstalar() {
         color: #FFEDAB;
         border: none;
         border-radius: 60px;
-        padding: 12px 24px;
+        padding: 12px 20px;
         font-family: 'Courier New', monospace;
         font-weight: bold;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         cursor: pointer;
         z-index: 9999;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+        letter-spacing: 1px;
     `;
     
-    btn.onclick = async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                btn.remove();
+    installBtn.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuário aceitou instalar');
             }
             deferredPrompt = null;
-        }
+            installBtn.remove();
+        });
     };
-    
-    document.body.appendChild(btn);
-}
-
-// Se já estiver instalado, não mostra botão
-window.addEventListener('appinstalled', () => {
-    const btn = document.getElementById('pwa-install-btn');
-    if (btn) btn.remove();
+    document.body.appendChild(installBtn);
 });
 
 // ============ CARA OU COROA ============
@@ -629,16 +619,6 @@ if (isHomePage) {
                 this.classList.add('active');
             });
         });
-    });
-}
-
-// Forçar limpeza do cache do Service Worker (para atualizar)
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        for (let registration of registrations) {
-            registration.unregister();
-            console.log('Service Worker desregistrado');
-        }
     });
 }
 
