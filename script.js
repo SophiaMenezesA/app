@@ -521,3 +521,45 @@ if (currentPath.includes('caracoroa.html')) {
     
     console.log('✅ Cara ou Coroa inicializado!');
 }
+
+// ============ NAVEGAÇÃO DA TELA INICIAL ============
+// Verifica se está na página inicial
+const isHomePage = window.location.pathname.includes('index.html') || 
+                   window.location.pathname === '/' || 
+                   window.location.pathname === '' ||
+                   window.location.pathname === '/index.html';
+
+if (isHomePage) {
+    console.log('🏠 Tela inicial detectada');
+    
+    // Aguardar o DOM carregar completamente
+    document.addEventListener('DOMContentLoaded', function() {
+        const icons = document.querySelectorAll('.home-icon');
+        console.log('Ícones encontrados:', icons.length);
+        
+        icons.forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                const page = this.dataset.page;
+                console.log('Clicou no ícone:', page);
+                
+                if (page) {
+                    // Navegar para a página
+                    window.location.href = page + '.html';
+                }
+            });
+        });
+    });
+}
+
+// Forçar limpeza do cache do Service Worker (para atualizar)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+            registration.unregister();
+            console.log('Service Worker desregistrado');
+        }
+    });
+}
+
+console.log('✅ Script completo carregado!');
+console.log('URL atual:', window.location.pathname);
