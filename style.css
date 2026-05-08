@@ -663,3 +663,61 @@ body {
         font-size: 1.2rem;
     }
 }
+
+/* Seção de subtítulos */
+.section-subtitle {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4F6815;
+    margin: 20px 0 12px 0;
+    letter-spacing: 1px;
+}
+
+/* Lista de tickets resgatados */
+.resgatados-list .ticket-card {
+    opacity: 0.7;
+    background: #e0d5c4;
+    cursor: default;
+}
+
+.resgatados-list .ticket-card .resgatar-btn {
+    display: none;
+}
+
+.resgatados-list .ticket-card::before {
+    content: "✓";
+    color: #4F6815;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: #FFEDAB;
+    border-radius: 24px;
+    border: 2px dashed #4F6815;
+    color: #4F6815;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+/* Badge de resgatado */
+.resgatado-badge {
+    background: #4F6815;
+    color: #FFEDAB;
+    border-radius: 60px;
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+/* Card de ticket resgatado */
+.resgatado-card {
+    opacity: 0.7;
+    background: #e0d5c4;
+    cursor: default;
+}
