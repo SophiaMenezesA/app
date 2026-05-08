@@ -1,98 +1,84 @@
 /* ============ FRASES ============ */
-.page-title{
-    font-size:1.8rem;
-    font-weight:800;
-    color:#75070C;
-    margin-bottom:30px;
-    border-left:5px solid #4F6815;
-    padding-left:20px;
+.gift-box {
+    text-align: center;
+    font-size: 6em;
+    cursor: pointer;
+    margin: 50px 0;
+    transition: all 0.2s;
+}
+.gift-box.shake {
+    animation: shake 0.5s ease-in-out;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
 }
 
-.gift-box{text-align:center;font-size:6em;cursor:pointer;margin:50px 0;transition:0.2s;}
-.gift-box.shake{animation:shake 0.5s;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-
-.frase-sorteada{
-    text-align:center;
-    padding:20px;
-    background:#FFEDAB;
-    border:2px solid #4F6815;
-    border-radius:20px;
-    margin:20px 0;
-    font-weight:bold;
-    color:#75070C;
+.frase-sorteada {
+    text-align: center;
+    font-size: 1rem;
+    padding: 20px;
+    background: #FFEDAB;
+    border: 2px solid #4F6815;
+    border-radius: 20px;
+    margin: 20px 0;
+    font-family: monospace;
+    font-weight: bold;
+    color: #75070C;
 }
 
-.frase-actions{text-align:center;margin-top:20px;}
-
-.action-btn{
-    background:#75070C;
-    color:#FFEDAB;
-    border:none;
-    border-radius:60px;
-    padding:12px 28px;
-    font-size:1rem;
-    font-family:'Courier New',monospace;
-    font-weight:bold;
-    cursor:pointer;
-    margin:20px auto;
-    display:block;
-    width:200px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    transition:0.1s;
-}
-.action-btn:active{transform:translateX(4px);}
-
-.secondary-btn{
-    background:#4F6815;
-    color:#FFEDAB;
-    border:none;
-    border-radius:60px;
-    padding:8px 18px;
-    font-family:'Courier New',monospace;
-    font-weight:bold;
-    cursor:pointer;
-    margin:5px;
-    font-size:0.8rem;
+.frase-actions {
+    text-align: center;
+    margin-top: 20px;
 }
 
-.back-btn{
-    background:#75070C;
-    color:#FFEDAB;
-    border:none;
-    border-radius:60px;
-    padding:10px 20px;
-    font-size:0.8rem;
-    font-family:'Courier New',monospace;
-    font-weight:bold;
-    cursor:pointer;
-    margin-bottom:30px;
-    transition:0.1s;
+/* Modal de frases salvas */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(117, 7, 12, 0.9);
 }
-.back-btn:active{transform:translateX(4px);}
+.modal-content {
+    background: #FFEDAB;
+    margin: 20% auto;
+    padding: 25px;
+    width: 80%;
+    max-width: 450px;
+    border-radius: 28px;
+    border: 3px solid #4F6815;
+}
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #75070C;
+}
+.close:hover { color: #4F6815; }
 
-/* Modal */
-.modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0;top:0;
-    width:100%;height:100%;
-    background:rgba(117,7,12,0.9);
+#frasesSalvasList {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
 }
-.modal-content{
-    background:#FFEDAB;
-    margin:20% auto;
-    padding:25px;
-    width:80%;
-    max-width:450px;
-    border-radius:28px;
-    border:3px solid #4F6815;
+.frase-salva-item {
+    background: #F0E6DA;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 16px;
+    border-left: 3px solid #75070C;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #75070C;
 }
-.close{float:right;font-size:24px;font-weight:bold;cursor:pointer;color:#75070C;}
 
-@media (max-width:480px){
-    .page-title{font-size:1.4rem;}
-    .gift-box{font-size:4em;}
+@media (max-width: 480px) {
+    .gift-box { font-size: 4em; }
+    .modal-content { margin: 40% auto; width: 90%; }
 }
