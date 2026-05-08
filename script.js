@@ -15,7 +15,16 @@ const dadosIniciais = {
         { id: 3, titulo: "Vale Cafuné", descricao: "Cafuné de tempo indeterminado" }, 
         { id: 4, titulo: "Vale 1000 Beijos!", descricao: "Beijos, beijos e mais beijos" }, 
         { id: 5, titulo: "Vale “SIM”", descricao: "Pelo visto, preciso dizer sim pra qualquer coisa.." }, 
-        { id: 6, titulo: "Vale Filminho", descricao: "Um filme com pipoca, o que achas?" }
+        { id: 6, titulo: "Vale Filminho", descricao: "Um filme com pipoca, o que achas?" },
+        { id: 7, titulo: "Vale Discussão", descricao: "Deixo você ganhar uma discussão. Uso único, hein 💢" },
+        { id: 8, titulo: "Vale Cosquinha", descricao: "Deixo você me fazer cosquinha... PEGA LEVE." },
+        { id: 9, titulo: "Vale 50X LINDO", descricao: "Vale um elogio de 50 horas ininterruptas (prepare os ouvidos)" },
+        { id: 10, titulo: "Vale Qualquer Coisa", descricao: "Esse ticket é primo do “SIM”" },
+        { id: 11, titulo: "Vale Lambeijo", descricao: "SÓ DESSA VEZ eu deixo você lambeijocar minha testa." },
+        { id: 12, titulo: "Vale Beijo-Moranguete", descricao: "Espero que tenha entendido a junção das duas palavras." },
+        { id: 13, titulo: "Vale Chá da tarde", descricao: "Vale a pena, hein" },
+        { id: 14, titulo: "Vale Beijoquinha", descricao: "Beijinho até perder o fôlego" },
+        { id: 15, titulo: "Vale Chuva do Amor", descricao: "Uma dança na chuva, um abraço encharcado, um beijo de nuvem" }
     ],
     frases: [
         "Você consegue, monamú. Acredito em você <3",
@@ -26,7 +35,18 @@ const dadosIniciais = {
         "Você consegue, monamú. Acredito em você <3",
         "Um passarinho me contou que tem uma moranguete te amando...", 
         "Amo seus olhinhos, estou com saudades!", 
-        "Per ardua ad Astra"
+        "“O teu amor me pôs de pé”  - Vanguart", 
+        "“O seu amor sem fim já mudou a minha vida” - Vanguart", 
+        "Namorar você é elite",
+        "O amor é você",
+        "Eu te amo, sabia? e amo mais!!",
+        "Seu beijinho cura tudo ❤️",
+        "Amo seu sorriso", 
+        "Amo seus cabelos e seu bigodinho incrivelmente charmoso",
+        "Amo seu mundo, é complementar ao meu",
+        "“Eu gosto da alma dele. A alma dele é sensacional, é gêmea minha” - Rita Lee",
+        "Tudo que é amor se parece com você",
+        "Quando eu te olho, penso “É meu namorado mesmo, é?? 🥹”"
 
     ],
     roletaOpcoes: [
