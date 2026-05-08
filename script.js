@@ -11,21 +11,34 @@ const STORAGE_KEYS = {
 const dadosIniciais = {
     tickets: [
         { id: 1, titulo: "Vale Abraço", descricao: "Um abração de urso pra quando precisar" },
-        { id: 2, titulo: "Vale Dança", descricao: "Dança de 30 segundos liberada" },
-        { id: 3, titulo: "Vale Massagem", descricao: "Massagem relaxante de 5 minutos" }
+        { id: 2, titulo: "Vale Dança", descricao: "Consigo te puxar para uma dança com isso aqui, hein" },
+        { id: 3, titulo: "Vale Cafuné", descricao: "Cafuné de tempo indeterminado" }, 
+        { id: 4, titulo: "Vale 1000 Beijos!", descricao: "Beijos, beijos e mais beijos" }, 
+        { id: 5, titulo: "Vale “SIM”", descricao: "Pelo visto, preciso dizer sim pra qualquer coisa.." }, 
+        { id: 6, titulo: "Vale Filminho", descricao: "Um filme com pipoca, o que achas?" }
     ],
     frases: [
-        "Acredite nos seus sonhos! 🌟",
-        "Cada dia é uma nova oportunidade ✨",
-        "Você é mais forte do que imagina 💪"
+        "Você consegue, monamú. Acredito em você <3",
+        "Pode ter certeza de que estou pensando em você AGORA.", 
+        "Eu te amo, presunto 4 olhos",
+        "Você é meu pão com requeijão",
+        "IIIh... se tirou essa frase, saiba que está me devendo um zilhão de beijos.",
+        "Você consegue, monamú. Acredito em você <3",
+        "Um passarinho me contou que tem uma moranguete te amando...", 
+        "Amo seus olhinhos, estou com saudades!", 
+        "Per ardua ad Astra"
+
     ],
     roletaOpcoes: [
-        "Parabéns! +10 pontos",
-        "Que sorte! Ganhou um abraço",
-        "Tente novamente",
-        "Você é incrível!",
-        "Dia de sorte!",
-        "Mais sorte na próxima"
+        "SIIIIM",
+        "NÃÃÃÃÃO",
+        "SIIIIM",
+        "NÃÃÃÃÃO",
+        "Hmm, tô na dúvida...",
+        "TALVEEEEZ",
+        "Gire novamente, estou pensando", 
+        "A Sophia diria sim?", 
+        "TALVEEEEZ"
     ]
 };
 
@@ -82,7 +95,7 @@ if (window.location.pathname.includes('roleta.html')) {
 
             // Cores vibrantes
             // Cores combinando com a paleta
-            const cores = ['#75070C', '#4F6815', '#FFEDAB', '#F0E6DA', '#75070C', '#4F6815'];
+            const cores = ['#be3135', '#4F6815', '#FFEDAB', '#F0E6DA', '#be3135', '#4F6815'];
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, inicio, fim);
@@ -97,7 +110,7 @@ if (window.location.pathname.includes('roleta.html')) {
             ctx.translate(centerX, centerY);
             ctx.rotate(inicio + ANGULO_POR_OPCAO / 2);
             ctx.textAlign = "center";
-            ctx.fillStyle = "#333";
+            ctx.fillStyle = "#030000";
             ctx.font = "bold 14px Arial";
             const texto = opcoes[i].substring(0, 12);
             ctx.fillText(texto, radius * 0.6, 5);
@@ -107,9 +120,9 @@ if (window.location.pathname.includes('roleta.html')) {
         // Círculo central
         ctx.beginPath();
         ctx.arc(centerX, centerY, 30, 0, TAU);
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = '#ffffff';
         ctx.fill();
-        ctx.strokeStyle = '#333';
+        ctx.strokeStyle = '#6b0606';
         ctx.stroke();
     }
 
